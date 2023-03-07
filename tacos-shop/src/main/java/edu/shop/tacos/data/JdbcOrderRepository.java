@@ -29,7 +29,7 @@ public class JdbcOrderRepository implements OrderRepository {
 
 	@Override
 	public Order save(Order order) {
-		order.setCreatedAt(new Date());
+		order.setPlacedAt(new Date());
 		long orderId = saveOrderInfo(order);
 		order.setId(orderId);
 

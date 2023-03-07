@@ -1,5 +1,6 @@
 package edu.shop.tacos.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,26 +16,23 @@ import lombok.Data;
 public class Order {
 
 	private long id;
-	private Date createdAt;
-
+	private Date placedAt;
 	private List<Taco> tacos;
 	
-	private Order placedAt;
-	
 	@NotBlank(message = "The name is required")
-	private String name;
+	private String deliveryName;
 
 	@NotBlank(message = "The street is required")
-	private String street;
+	private String deliveryStreet;
 
 	@NotBlank(message = "The city is required")
-	private String city;
+	private String deliveryCity;
 
 	@NotBlank(message = "The state is required")
-	private String state;
+	private String deliveryState;
 
 	@NotBlank(message = "The zip is required")
-	private String zip;
+	private String deliveryZip;
 
 	@CreditCardNumber(message = "Not a valid ccNumber")
 	private String ccNumber;
@@ -46,7 +44,8 @@ public class Order {
 	private String ccCVV;
 
 	public void addDesign(Taco design) {
-		tacos.add(design);
+		if (tacos==null) tacos=new ArrayList<>();
+			tacos.add(design);
 	}
 
 }

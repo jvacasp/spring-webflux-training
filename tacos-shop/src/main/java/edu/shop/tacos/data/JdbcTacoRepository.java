@@ -16,39 +16,41 @@ import edu.shop.tacos.model.Taco;
 
 @Repository
 public class JdbcTacoRepository implements TacoRepository {
-	
+
 	@Autowired
 	private JdbcTemplate jdbc;
-	
+
 	@Override
-	public Taco save(Taco design) {					
-		long tacoId = saveTacoInfo(design);		
+	public Taco save(Taco design) {
+		long tacoId = saveTacoInfo(design);
 		design.setId(tacoId);
-		
-		for(Ingredient ingredient:design.getIngredients()) {
+
+		for (Ingredient ingredient : design.getIngredients()) {
 			saveIngredientToTaco(ingredient, tacoId);
 		}
-		
+
 		return design;
 	}
-	
-	
-	private long saveTacoInfo (Taco design) {
-		
+
+	private long saveTacoInfo(Taco design) {
+
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		
+
+		PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(
+				"INSERT INTO Taco (name, createdAt) VALUES (?,?)", Types.VARCHAR, Types.TIMESTAMP);	
+		pscf.setReturnGeneratedKeys(true);
+
 		design.setCreatedAt(new Date());
-		jdbc.update(new PreparedStatementCreatorFactory("INSERT INTO Taco (name, createdAt) VALUES (?,?)",Types.VARCHAR,Types.TIMESTAMP).
-				newPreparedStatementCreator(new Object[]{design.getName(), new Timestamp(design.getCreatedAt().getTime())})
-				, keyHolder);
-		
-		Number n = keyHolder.getKey();				
+		jdbc.update(pscf.newPreparedStatementCreator(
+				new Object[] { design.getName(), new Timestamp(design.getCreatedAt().getTime()) }), keyHolder);
+
+		Number n = keyHolder.getKey();
 		return n.longValue();
 	}
 
-	private void saveIngredientToTaco (Ingredient ingredient, long tacoId) {
-		
-		jdbc.update("INSERT INTO Taco_Ingredients (taco_id, ingredient_id) VALUES (?,?)",tacoId, ingredient.getId()); 
+	private void saveIngredientToTaco(Ingredient ingredient, long tacoId) {
+
+		jdbc.update("INSERT INTO Taco_Ingredients (taco_id, ingredient_id) VALUES (?,?)", tacoId, ingredient.getId());
 	}
 
 }
