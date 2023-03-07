@@ -1,0 +1,18 @@
+package edu.shop.tacos.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import edu.shop.tacos.model.Order;
+
+@Controller
+@RequestMapping("/orders")
+public class OrderController {
+	
+	
+	public String orderForm(Model model) {
+		model.addAttribute("order",new Order());
+	}
+
+}

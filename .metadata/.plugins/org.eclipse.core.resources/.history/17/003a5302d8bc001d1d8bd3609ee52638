@@ -1,0 +1,22 @@
+package edu.shop.tacos.data;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+
+import edu.shop.tacos.model.Order;
+
+public class JdbcOrderRepository implements OrderRepository{
+	
+	@Autowired
+	private JdbcTemplate jdbc;
+	private SimpleJdbcInsert orderInsert;
+	private SimpleJdbcInsert orderTacoInsert;
+
+	@Override
+	public Order save(Order order) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

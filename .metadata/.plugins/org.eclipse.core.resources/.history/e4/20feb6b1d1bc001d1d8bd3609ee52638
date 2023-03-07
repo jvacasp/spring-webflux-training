@@ -1,0 +1,12 @@
+package edu.shop.tacos.data;
+
+import edu.shop.tacos.model.Ingredient;
+import edu.shop.tacos.model.Taco;
+
+public interface TacoRepository {
+	
+	Iterable<Taco> findAll();
+	Ingredient findOne (String id);
+	void save(Taco ingredient);
+
+}

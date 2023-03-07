@@ -1,0 +1,29 @@
+package edu.shop.tacos.web;
+
+import java.util.Arrays;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import edu.shop.tacos.model.Ingredient;
+
+@Controller
+@RequestMapping("design")
+public class DesignTacoController {
+	
+	public String showDesignForm(Model model) {
+		
+		Ingredient[] ingredients= {
+				new Ingredient("1", "Ketchup", Ingredient.Type.SAUCE),
+				new Ingredient("2", "Chicken", Ingredient.Type.PROTEIN),
+				new Ingredient("3", "Pork", Ingredient.Type.PROTEIN),
+				new Ingredient("4", "Cheedar", Ingredient.Type.CHEESE),
+				new Ingredient("5", "Mozzarella", Ingredient.Type.CHEESE)				
+		};
+		
+		model.addAttribute("ingredients", Arrays.asList(ingredients));
+		
+		return null;
+	}	
+}

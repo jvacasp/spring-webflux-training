@@ -1,0 +1,61 @@
+package edu.shop.tacos.data;
+
+import java.sql.Timestamp;
+import java.sql.Types;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+
+import edu.shop.tacos.model.Ingredient;
+import edu.shop.tacos.model.Taco;
+
+public class JdbcTacoRepository implements TacoRepository {
+	
+	@Autowired
+	private JdbcTemplate jdbc;
+	
+	@Override
+	public Taco save(Taco design) {					
+		long tacoId = jdbc.update("INSERT INTO Taco (name, createdAt) VALUES (? , ?)", design.getName(), design.getCreatedAt());
+		
+		design.setId(tacoId);
+		
+		for(Ingredient ingredient:design.getIngredients()) {
+			
+		}
+		
+		
+		
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	private long saveTacoInfo (Taco design) {
+		
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		
+		design.setCreatedAt(new Date());
+		jdbc.update(new PreparedStatementCreatorFactory("INSERT INTO Taco (name, createdAt) VALUES (?,?)",Types.VARCHAR,Types.TIMESTAMP).
+				newPreparedStatementCreator(new Object[]{design.getName(), new Timestamp(design.getCreatedAt().getTime())})
+				, keyHolder);
+		
+		Number n = keyHolder.getKey();				
+		return n.longValue();
+	}
+
+	private long saveIngredientToTaco (Ingredient ingredient, long tacoId) {
+		
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		Number n = keyHolder.getKey();
+		
+		
+		
+		return n.longValue();
+	}
+
+}
