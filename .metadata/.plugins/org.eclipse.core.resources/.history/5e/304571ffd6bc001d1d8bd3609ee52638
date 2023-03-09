@@ -1,7 +1,0 @@
-package edu.shop.tacos.data;
-
-public interface OrderRepository {
-
-	void save (Repository)
-}
-
